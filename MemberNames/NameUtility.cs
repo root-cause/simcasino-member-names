@@ -9,10 +9,10 @@ namespace MemberNames
             switch (gender)
             {
                 case Gender.Male:
-                    return $"{sm_maleNames[ThreadSafeRandom.RandomNext(0, sm_maleNames.Length)]} {sm_lastNames[ThreadSafeRandom.RandomNext(0, sm_femaleNames.Length)]}";
+                    return $"{sm_maleNames[ThreadSafeRandom.RandomNext(0, sm_maleNames.Length)]} {sm_lastNames[ThreadSafeRandom.RandomNext(0, sm_lastNames.Length)]}";
 
                 case Gender.Female:
-                    return $"{sm_femaleNames[ThreadSafeRandom.RandomNext(0, sm_femaleNames.Length)]} {sm_lastNames[ThreadSafeRandom.RandomNext(0, sm_femaleNames.Length)]}";
+                    return $"{sm_femaleNames[ThreadSafeRandom.RandomNext(0, sm_femaleNames.Length)]} {sm_lastNames[ThreadSafeRandom.RandomNext(0, sm_lastNames.Length)]}";
 
                 default:
                     return "Bob Default";
