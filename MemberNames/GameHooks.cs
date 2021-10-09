@@ -19,11 +19,26 @@ namespace MemberNames
             return false;
         }
 
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(Customer), "ISelectable_SelectedEnter")]
+        public static void AddRenameButton(Customer __instance, UITab tab)
+        {
+            if (__instance.IsVIP || !__instance.IsMember)
+            {
+                return;
+            }
+
+            tab.AddButton("Rename", () =>
+            {
+                __instance.RepeatCustomerData.RandomizeName(__instance.gender);
+            }, tabCategory: UITab.UITabCategories.Guests);
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(RepeatCustomer), MethodType.Constructor, new[] { typeof(Customer) })]
         public static void RenameCustomer(RepeatCustomer __instance, Customer template)
         {
-            __instance.Name = NameUtility.GetName(template.gender);
+            __instance.RandomizeName(template.gender);
         }
 
         [HarmonyPostfix]
@@ -32,7 +47,7 @@ namespace MemberNames
         {
             if (__instance.Name == "Bob Default")
             {
-                __instance.Name = NameUtility.GetName(customer.gender);
+                __instance.RandomizeName(customer.gender);
             }
         }
     }
